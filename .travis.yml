@@ -10,7 +10,21 @@ install:
 script:
   - ./.travis/run.sh
 env:
-  - LLDPD_CONFIG_ARGS=""
-  - LLDPD_CONFIG_ARGS="--with-embedded-libevent"
-  - LLDPD_CONFIG_ARGS="--disable-privsep --with-snmp"
-  - LLDPD_CONFIG_ARGS="--with-snmp --with-xml --with-json --disable-lldpmed --disable-dot1 --disable-dot3"
+  global:
+   - secure: "1qAHFxnz0gIxMMl9DAVzoPvVSpOacWT2G6ItcaoaVe1r4OANzpoHBlbyHX2I/1KFe+BohzjS9kXA4NrlPaL81qfvu9E6qZ9yai/+0gHdzZttB2uvdyFXyDVye3CHHDlYMfRRQf6C+eYs5CKeedWq9Q3arO1GyAWiL9RcW1466sg="
+  matrix:
+    - LLDPD_CONFIG_ARGS=""
+    - LLDPD_CONFIG_ARGS="--with-embedded-libevent"
+    - LLDPD_CONFIG_ARGS="--disable-privsep --with-snmp"
+    - LLDPD_CONFIG_ARGS="--with-snmp --with-xml --with-json --disable-lldpmed --disable-dot1 --disable-dot3"
+addons:
+  coverity_scan:
+    project:
+      name: "vincentbernat/lldpd"
+      description: "implementation of IEEE 802.1ab (LLDP)"
+    notification_email: bernat@luffy.cx
+    build_command_prepend:
+      - ./autogen.sh
+      - ./configure --with-snmp
+    build_command: make
+    branch_pattern: coverity_scan
