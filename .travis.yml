@@ -11,8 +11,6 @@ addons:
       name: "vincentbernat/lldpd"
       description: "implementation of IEEE 802.1ab (LLDP)"
     notification_email: bernat@luffy.cx
-    build_command_prepend:
-      - ./autogen.sh
-      - ./configure --with-snmp
+    build_command_prepend: ./.travis/run.sh
     build_command: make
     branch_pattern: coverity_scan

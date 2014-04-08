@@ -2,10 +2,11 @@
 
 set -e
 
+./autogen.sh
+./configure ${LLDPD_CONFIG_ARGS---with-snmp}
+
 [ "${COVERITY_SCAN_BRANCH}" != 1 ] || exit 0
 
-./autogen.sh
-./configure $LLDPD_CONFIG_ARGS
 make
 make check
 make distcheck
